@@ -32,7 +32,7 @@
 			Addresses
 		</label>
 
-<InputChip class=" border-red-400 border-2" padding="p-4" bind:value={point.addresses} validation={isValidEmail} name="chips" placeholder="Enter an email address and press Enter." />
+<InputChip  padding="p-4" bind:value={point.addresses} validation={isValidEmail} name="chips" placeholder="Enter an email address and press Enter." />
 	</div>
 	<div class="m-10">
 		<label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -42,7 +42,7 @@
 			type="text"
 			bind:value={point.subject}
 			id="subject"
-			class="form-input input w-full px-4 py-3 rounded-lg"
+			class="form-input input w-full"
 			placeholder="Subject"
 			required
 		/>
