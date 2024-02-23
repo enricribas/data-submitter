@@ -26,7 +26,16 @@
 </script>
 
 <form on:submit={handleForm}>
-	<p class="border text-center p-2 rounded-full">Use &#123;&#123; &#125&#125 to inject attributes</p>
+	<div class="grid w-full">
+		<aside class="justify-self-end alert variant-outline-success bg-purple-200 w-64">
+			<div class="text-center alert-message">
+				<h5 class="h5">
+					Use &#123;&#123; &#125&#125 to inject attributes
+				</h5>
+			</div>
+		</aside>
+	</div>
+
 	<div class="m-10">
 		<label for="addresses" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
 			Addresses
