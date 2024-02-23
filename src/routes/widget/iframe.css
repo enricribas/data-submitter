@@ -1,0 +1,16 @@
+.vfrc-widget--chat {
+	border: 2px solid rgb(120, 154, 213);
+	position: absolute !important;
+	top: 0 !important;
+	bottom: 0 !important;
+	width: 100% !important;
+	left: 0 !important;
+	right: 0 !important;
+	max-height: none !important;
+	height: 100% !important;
+	border-radius: 0 !important;
+}
+
+.vfrc-widget--chat header {
+	display: none !important;
+}

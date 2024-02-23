@@ -1,0 +1,36 @@
+const mailgun = require('mailgun-js');
+
+import { MailgunProviderConfig } from '../types';
+
+type MailgunData = {
+	from: string;
+	to: string;
+	subject: string;
+	text: string;
+};
+
+export const mailgunSender = async (output) => {
+	const request = [];
+	const response = [];
+	const { apiKey, domain } = output.provider as MailgunProviderConfig;
+	const mg = mailgun({ apiKey, domain });
+
+	output.to.map(async (email: string) => {
+		const data: MailgunData = {
+			from: output.provider.from,
+			to: email,
+			subject: output.subject,
+			text: output.document
+		};
+
+		request.push(data);
+
+		mg.messages().send(data, function (error, body) {
+			// FIXME: Errors are async and not getting reported back
+		});
+
+		response.push({ email, state: 'waiting' });
+	});
+
+	return [request, response];
+};
