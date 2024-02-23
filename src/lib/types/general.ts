@@ -8,6 +8,7 @@ export type Point = {
 	template?: string;
 	subject?: string;
 	providerID?: string;
+	webhookID?: string;
 	mappings?: Mappings;
 };
 

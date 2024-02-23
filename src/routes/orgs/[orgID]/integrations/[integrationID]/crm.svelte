@@ -1,9 +1,23 @@
 <script lang="ts">
-	export let point: import("$lib/types/general").Point;
+	import { page } from "$app/stores";
+	import type { Point } from "$lib/types/general";
+	import { updatePoint } from "$lib/commands/updatePoint";
 
-	const handleForm = () => {
-		// Point is cannot be edited in form
-		console.log({ editCopy });
+	export let point: Point;
+
+	import type { ToastSettings } from '@skeletonlabs/skeleton';
+	import { getToastStore } from '@skeletonlabs/skeleton';
+
+	// TODO this is all duplicated from email point
+	const toastStore = getToastStore();
+	const saved: ToastSettings = {
+		message: 'Saved successfully',
+	};
+
+	const handleForm = async () => {
+		const { orgID } = $page.params;
+		await updatePoint(orgID, point);
+		toastStore.trigger(saved);
 	};
 
 	$: editCopy = Object.entries(
@@ -13,7 +27,15 @@
 	);
 </script>
 
+
 <form on:submit={handleForm}>
+	<div class="m-10">
+		<label for="webhookID" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+			webhookID
+		</label>
+		<input type="text" bind:value={point.webhookID} id="webhookID" class="input input-form">
+	</div>
+
 	{#if point.mappings}
 		<label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
 			Map fields

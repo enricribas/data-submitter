@@ -5,6 +5,7 @@ export type Point = {
 	addresses?: string[];
 	template?: string;
 	subject?: string;
+	webhookID?: string;
 	providerID?: string;
 };
 

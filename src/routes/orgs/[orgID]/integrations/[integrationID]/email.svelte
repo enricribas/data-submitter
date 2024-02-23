@@ -4,7 +4,7 @@
 	import { InputChip } from '@skeletonlabs/skeleton';
 	import type { Point } from "$lib/types/general";
 
-	import type { ToastSettings, ToastStore } from '@skeletonlabs/skeleton';
+	import type { ToastSettings } from '@skeletonlabs/skeleton';
 	import { getToastStore } from '@skeletonlabs/skeleton';
 
 	const toastStore = getToastStore();
