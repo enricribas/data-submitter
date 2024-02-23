@@ -8,4 +8,9 @@ export type Point = {
 	template?: string;
 	subject?: string;
 	providerID?: string;
+	mappings?: Mappings;
 };
+
+interface Mappings {
+	[key: string]: string;
+}

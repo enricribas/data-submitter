@@ -11,7 +11,6 @@
 		email: Email
 	};
 
-
 	subscribePointsStore($page.params.integrationID);
 </script>
 

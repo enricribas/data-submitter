@@ -2,15 +2,22 @@
 	import { page } from "$app/stores";
 	import { updatePoint } from "$lib/commands/updatePoint";
 	import { InputChip } from '@skeletonlabs/skeleton';
+	import type { Point } from "$lib/types/general";
 
-	export let point;
+	import type { ToastSettings, ToastStore } from '@skeletonlabs/skeleton';
+	import { getToastStore } from '@skeletonlabs/skeleton';
 
-	let list: string[] = ['foo', 'bar', 'fizz', 'buzz'];
+	const toastStore = getToastStore();
+	const saved: ToastSettings = {
+		message: 'Saved successfully',
+	};
 
-	const handleForm = () => {
-		point.addresses = list;
-		const { orgID, integrationID } = $page.params;
-		updatePoint(orgID, integrationID, point);
+	export let point: Point;
+
+	const handleForm = async () => {
+		const { orgID } = $page.params;
+		await updatePoint(orgID, point);
+		toastStore.trigger(saved);
 	};
 
 	function isValidEmail(value: string): boolean {
@@ -19,13 +26,13 @@
 </script>
 
 <form on:submit={handleForm}>
-	<p>Use &#123;&#123; &#125&#125 syntax for mail merge</p>
+	<p>Use &#123;&#123; &#125&#125 to use attributes</p>
 	<div class="m-10">
 		<label for="addresses" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-			Addresses (seprated by comma and a space)
+			Addresses
 		</label>
 
-		<InputChip bind:value={list} validation={isValidEmail} name="chips" placeholder="Enter an email address and press Enter." />
+		<InputChip bind:value={point.addresses} validation={isValidEmail} name="chips" placeholder="Enter an email address and press Enter." />
 	</div>
 	<div class="m-10">
 		<label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">

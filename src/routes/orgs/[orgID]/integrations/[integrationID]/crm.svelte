@@ -1,5 +1,5 @@
-<script>
-	export let point;
+<script lang="ts">
+	export let point: import("$lib/types/general").Point;
 
 	const handleForm = () => {
 		// Point is cannot be edited in form

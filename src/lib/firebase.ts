@@ -23,3 +23,7 @@ if (typeof window !== "undefined") {
 		connectFunctionsEmulator(functions, "localhost", 5001);
 	}
 }
+
+//==== URLs
+export const pointURL = (orgID: string, providerID: string) =>
+	`/orgs/${orgID}/points/${providerID}`;
