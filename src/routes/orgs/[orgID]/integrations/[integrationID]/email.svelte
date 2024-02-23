@@ -27,12 +27,10 @@
 
 <form on:submit={handleForm}>
 	<div class="grid w-full">
-		<aside class="justify-self-end alert variant-outline-success bg-purple-200 w-64">
-			<div class="text-center alert-message">
+		<aside class="justify-self-end alert variant-outline-success bg-purple-200 w-96">
 				<h5 class="h5">
-					Use &#123;&#123; &#125&#125 to inject attributes
+					Use <em class="font-bold">&#123;&#123;attribute_name&#125&#125</em> to inject attributes
 				</h5>
-			</div>
 		</aside>
 	</div>
 
