@@ -1,6 +1,6 @@
-import { store, docFor } from '../admin';
-import { errorReturn, statuses, errors, requestURLFor} from '../utils';
-import { Request } from '../firebaseTypes';
+import { store, docFor } from "../admin";
+import { errorReturn, statuses, errors, requestURLFor } from "../utils";
+import { Request } from "../firebaseTypes";
 
 type PostDataRecord = {
 	contactID: string;
@@ -10,14 +10,18 @@ type PostDataRecord = {
 };
 
 const successResponse = {
-	success: true, 
-	message: "Request accepted. Check request records for processing status."
-}
+	success: true,
+	message: "Request accepted. Check request records for processing status.",
+};
+
+export const test = async (_req: Request, res) => {
+	return res.status(statuses.success).send(successResponse);
+};
 
 export const postData = async (req: Request, res) => {
-	const {apiKey, body, method, instanceID} = getVars(req);
+	const { apiKey, body, method, instanceID } = getVars(req);
 
-	if (method !== 'POST') return errorReturn(res, statuses.notFound, errors.notPost);
+	if (method !== "POST") return errorReturn(res, statuses.notFound, errors.notPost);
 	if (!apiKey) return errorReturn(res, statuses.notFound, errors.apiKey);
 
 	const apiRecord = await docFor(`/apikeys/${apiKey}`);
@@ -26,20 +30,21 @@ export const postData = async (req: Request, res) => {
 	const { orgID } = apiRecord;
 
 	try {
-		const success = createRequest(body, orgID, instanceID)
+		const success = createRequest(body, orgID, instanceID);
+
 		if (!success) return errorReturn(res, statuses.exists, errors.requestIDExists);
 
 		return res.status(statuses.success).send(successResponse);
 	} catch (error) {
-		return errorReturn(res, statuses.somethingWrong, errors.missingFields)
+		return errorReturn(res, statuses.somethingWrong, errors.missingFields);
 	}
 };
 
 const getVars = (req: Request) => ({
 	apiKey: req.query.apiKey,
-	instanceID: req.query.instanceID || 'default',
+	instanceID: req.query.instanceID || "default",
 	body: req.body as PostDataRecord,
-	method: req.method
+	method: req.method,
 });
 
 const createRequest = async (body: any, orgID: string, instanceID: any) => {
@@ -53,4 +58,4 @@ const createRequest = async (body: any, orgID: string, instanceID: any) => {
 	await store.doc(requestURL).set({ contactID, integrationID, data });
 
 	return true;
-}
+};

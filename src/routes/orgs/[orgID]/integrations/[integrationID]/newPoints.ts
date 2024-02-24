@@ -1,14 +1,10 @@
-export const newCRM = (integrationID: string) => ({
-	integrationID,
-	providerID: "syncari",
+export const newCRM = {
 	type: "crm",
-});
+};
 
-export const newEmail = (integrationID: string) => ({
-	integrationID,
-	providerID: "paubox",
+export const newEmail = {
 	type: "email",
 	addresses: [],
 	subject: "",
 	body: "",
-});
+};

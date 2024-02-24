@@ -3,7 +3,6 @@
 export type Point = {
 	id?: string;
 	type: string;
-	integrationID: string;
 	addresses?: string[];
 	template?: string;
 	subject?: string;

@@ -103,7 +103,7 @@ Create a new document with ID of "zapier" and data
 
 ### Create Integration Point (or Points)
 
-Under `orgs/akua`
+Under `orgs/akua/integrations/{integrationID}`
 
 Create a new collection called "points"
 
@@ -113,7 +113,6 @@ Create a new document with an ID of your choosing
 
 ```
 { 
-    integrationID: "leads",
     providerID: "syncari",
     webhookID: "prod-232-send-data" // only for syncari points
 }
@@ -140,6 +139,7 @@ If you want to use handlebars syntax in the message, subject or in the addresses
 
 
 ##### CRM integrations
+
 a `mapping` field is optional. Otherwise all data is set to integration unchanged.
 
 This will take a `first_name` attribute in the payload and convert it to `FirstName` field for CRM export
@@ -148,9 +148,9 @@ This will take a `first_name` attribute in the payload and convert it to `FirstN
 This might change in the future if needed
 
 **Your best bet is probably to just skip mappings field**
+
 ```
 {
-    integrationID: "leads"
     type: "crm"
     providerID: "zapier"
     mapping: {

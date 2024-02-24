@@ -1,36 +1,38 @@
-<script lang='ts'>
+<script lang="ts">
 	import { page } from "$app/stores";
 	import { updatePoint } from "$lib/commands/updatePoint";
-	import { InputChip } from '@skeletonlabs/skeleton';
+	import { InputChip } from "@skeletonlabs/skeleton";
 	import type { Point } from "$lib/types/general";
 
-	import type { ToastSettings } from '@skeletonlabs/skeleton';
-	import { getToastStore } from '@skeletonlabs/skeleton';
+	import type { ToastSettings } from "@skeletonlabs/skeleton";
+	import { getToastStore } from "@skeletonlabs/skeleton";
 
 	const toastStore = getToastStore();
 	const saved: ToastSettings = {
-		message: 'Saved successfully',
+		message: "Saved successfully",
 	};
 
 	export let point: Point;
 
 	const handleForm = async () => {
 		const { orgID } = $page.params;
-		await updatePoint(orgID, point);
+		await updatePoint(orgID, integrationID, point);
 		toastStore.trigger(saved);
 	};
 
+	$: integrationID = $page.params.integrationID;
+
 	function isValidEmail(value: string): boolean {
-		return value.includes('@') && value.includes('.');
+		return value.includes("@") && value.includes(".");
 	}
 </script>
 
 <form on:submit={handleForm}>
 	<div class="grid w-full">
 		<aside class="justify-self-end alert variant-outline-success bg-purple-200 w-96">
-				<h5 class="h5">
-					Use <em class="font-bold">&#123;&#123;attribute_name&#125&#125</em> to inject attributes
-				</h5>
+			<h5 class="h5">
+				Use <em class="font-bold">&#123;&#123;attribute_name&#125&#125</em> to inject attributes
+			</h5>
 		</aside>
 	</div>
 
@@ -39,7 +41,14 @@
 			Addresses
 		</label>
 
-<InputChip  padding="p-4" bind:value={point.addresses} validation={isValidEmail} name="chips" placeholder="Enter an email address and press Enter." />
+		<InputChip
+			padding="p-4"
+			bind:value={point.addresses}
+			validation={isValidEmail}
+			name="chips"
+			placeholder="Enter an email address and press Enter."
+			required
+		/>
 	</div>
 	<div class="m-10">
 		<label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -64,8 +73,9 @@
 			id="message"
 			bind:value={point.template}
 			rows="4"
-			class="form-textarea input  w-full rounded-lg"
+			class="form-textarea input w-full rounded-lg"
 			placeholder="Write your thoughts here..."
+			required
 		/>
 	</div>
 

@@ -15,9 +15,11 @@
   "main": "lib/index.js",
   "dependencies": {
     "axios": "^1.6.7",
+    "dotenv": "^16.4.5",
     "firebase-admin": "^11.5.0",
     "firebase-functions": "^4.7.0",
-    "handlebars": "^4.7.7"
+    "handlebars": "^4.7.7",
+    "paubox-node": "^1.2.5"
   },
   "devDependencies": {
     "firebase-functions-test": "^3.0.0",

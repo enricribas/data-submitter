@@ -25,5 +25,5 @@ if (typeof window !== "undefined") {
 }
 
 //==== URLs
-export const pointURL = (orgID: string, providerID: string) =>
-	`/orgs/${orgID}/points/${providerID}`;
+export const pointURL = (orgID: string, integrationID: string, providerID?: string) =>
+	`/orgs/${orgID}/integrations/${integrationID}/points/${providerID || ""}`;

@@ -5,35 +5,36 @@
 
 	export let point: Point;
 
-	import type { ToastSettings } from '@skeletonlabs/skeleton';
-	import { getToastStore } from '@skeletonlabs/skeleton';
+	import type { ToastSettings } from "@skeletonlabs/skeleton";
+	import { getToastStore } from "@skeletonlabs/skeleton";
 
 	// TODO this is all duplicated from email point
 	const toastStore = getToastStore();
 	const saved: ToastSettings = {
-		message: 'Saved successfully',
+		message: "Saved successfully",
 	};
+
+	$: integrationID = $page.params.integrationID;
 
 	const handleForm = async () => {
 		const { orgID } = $page.params;
-		await updatePoint(orgID, point);
+		await updatePoint(orgID, integrationID, point);
 		toastStore.trigger(saved);
 	};
 
 	$: editCopy = Object.entries(
 		point.mappings || {
-			FirstName: "{{first_name}}"
-		}
+			FirstName: "{{first_name}}",
+		},
 	);
 </script>
-
 
 <form on:submit={handleForm}>
 	<div class="m-10">
 		<label for="webhookID" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
 			webhookID
 		</label>
-		<input type="text" bind:value={point.webhookID} id="webhookID" class="input input-form">
+		<input type="text" bind:value={point.webhookID} id="webhookID" class="input input-form" />
 	</div>
 
 	{#if point.mappings}

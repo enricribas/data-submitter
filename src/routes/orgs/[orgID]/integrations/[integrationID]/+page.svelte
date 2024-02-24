@@ -20,25 +20,15 @@
 		});
 	};
 
-	$: integrationID = $page.params.integrationID;
-
 	subscribePointsStore($page.params.integrationID);
 </script>
 
 <div class="m-3">
 	<div class="m-4 flex flex-row gap-4">
-		<button
-			on:click={() => handleNew(newEmail(integrationID))}
-			type="button"
-			class="btn variant-filled"
-		>
+		<button on:click={() => handleNew(newEmail)} type="button" class="btn variant-filled">
 			Create Email
 		</button>
-		<button
-			on:click={() => handleNew(newCRM(integrationID))}
-			type="button"
-			class="btn variant-filled"
-		>
+		<button on:click={() => handleNew(newCRM)} type="button" class="btn variant-filled">
 			Create CRM
 		</button>
 	</div>
@@ -47,7 +37,7 @@
 		{#each $pointsStore as point}
 			<div class="border rounded-lg border-slate-400">
 				<AccordionItem>
-					<svelte:fragment slot="summary"><h2>{point.type}</h2></svelte:fragment>
+					<svelte:fragment slot="summary"><h2>{point.id || "new"}</h2></svelte:fragment>
 					<svelte:fragment slot="content">
 						<svelte:component this={options[point.type]} {point} />
 					</svelte:fragment>

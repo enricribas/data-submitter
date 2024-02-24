@@ -17,7 +17,7 @@ export const statuses = {
 	notFound: 404,
 	somethingWrong: 422,
 	exists: 409,
-	success: 200
+	success: 200,
 };
 
 // Common error messages
@@ -26,7 +26,7 @@ export const errors = {
 	notPost: "Must be a POST request",
 	apiKeyMissing: "ApiKey is invalid",
 	requestIDExists: "Duplicate RequestID. Record already exists",
-	missingFields: "Some data is missing or invalid"
+	missingFields: "Some data is missing or invalid",
 };
 
 // A util that returns common URLs based on context
@@ -42,8 +42,8 @@ export const collectionURLS = (context: EventContext, _requestID?: string) => {
 		integrationsURL: orgify(`/integrations`),
 		contactsURL: orgify(`/records/${instanceID}/contacts`),
 		providersURL: orgify("/providers"),
-		pointsURL: orgify(`/points`),
-		requestURL: requestURLFor(orgID, instanceID, _requestID || requestID)
+		pointsURL: (integrationID: string) => orgify(`/integrations/${integrationID}/points`),
+		requestURL: requestURLFor(orgID, instanceID, _requestID || requestID),
 	};
 };
 
@@ -57,7 +57,7 @@ export const processMap = (processor) => (mappings, data) => {
 			const processed = processor(value, data);
 
 			return [field, processed];
-		})
+		}),
 	);
 };
 
