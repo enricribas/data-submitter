@@ -1,7 +1,7 @@
 // TODO: Share this with functions subfolder
 //   simple, create symbolic link for types?
 export type Point = {
-	id: string;
+	id?: string;
 	type: string;
 	integrationID: string;
 	addresses?: string[];

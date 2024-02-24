@@ -1,5 +1,5 @@
 export type Point = {
-	id: string;
+	id?: string;
 	type: string;
 	integrationID: string;
 	addresses?: string[];
