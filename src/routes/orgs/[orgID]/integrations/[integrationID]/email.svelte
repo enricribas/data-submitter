@@ -7,7 +7,7 @@
 </script>
 
 <div class="grid w-full">
-	<aside class="justify-self-end alert variant-outline-success bg-purple-200 w-96">
+	<aside class="justify-self-end alert variant-outline-success bg-pink-700 text-slate-300 w-96">
 		<h5 class="h5">
 			Use <em class="font-bold">&#123;&#123;attribute_name&#125&#125</em> to inject attributes
 		</h5>
