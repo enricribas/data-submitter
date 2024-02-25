@@ -6,5 +6,5 @@ export const newEmail = {
 	type: "email",
 	addresses: [],
 	subject: "",
-	body: "",
+	template: "",
 };

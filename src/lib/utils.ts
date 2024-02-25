@@ -8,3 +8,9 @@ export const randomUUID = (length = 32) => {
 
 	return uuid;
 };
+
+export const isValidEmail = (value: string): boolean => {
+	const isEmail = value.includes("@") && value.includes(".");
+	const attributeFormat = /{{[a-zA-Z]+}}/;
+	return isEmail || attributeFormat.test(value);
+};

@@ -2,6 +2,7 @@
 //   simple, create symbolic link for types?
 export type Point = {
 	id?: string;
+	name?: string;
 	type: string;
 	addresses?: string[];
 	template?: string;

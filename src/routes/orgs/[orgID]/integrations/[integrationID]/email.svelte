@@ -1,12 +1,9 @@
 <script lang="ts">
 	import { InputChip } from "@skeletonlabs/skeleton";
 	import type { Point } from "$lib/types/general";
+	import { isValidEmail } from "$lib/utils";
 
 	export let point: Point;
-
-	function isValidEmail(value: string): boolean {
-		return value.includes("@") && value.includes(".");
-	}
 </script>
 
 <div class="grid w-full">

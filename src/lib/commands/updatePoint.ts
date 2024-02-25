@@ -8,7 +8,7 @@ export const updatePoint = (orgID: string, integrationID: string, point: Point) 
 	const docURL = pointURL(orgID, integrationID, id || providerNewID(point));
 	const pointDoc = doc(db, docURL);
 
-	return setDoc(pointDoc, point);
+	return setDoc(pointDoc, { name: id, ...point });
 };
 
 const providerNewID = (point: Point) => `${point.type}-${randomUUID(5)}`;

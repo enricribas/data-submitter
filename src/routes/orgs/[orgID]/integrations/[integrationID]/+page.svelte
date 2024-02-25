@@ -50,6 +50,17 @@
 					<svelte:fragment slot="summary"><h2>{point.id || "new"}</h2></svelte:fragment>
 					<svelte:fragment slot="content">
 						<form on:submit={() => handleForm(point)}>
+							{#if !point.name}
+								<div class="m-10">
+									<label
+										for="id"
+										class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+									>
+										name
+									</label>
+									<input type="text" bind:value={point.id} id="id" class="input input-form" />
+								</div>
+							{/if}
 							<svelte:component this={options[point.type]} {point} />
 						</form>
 					</svelte:fragment>
