@@ -45,8 +45,8 @@
 
 	<Accordion spacing="space-y-2">
 		{#each $pointsStore as point}
-			<div class="border rounded-lg border-slate-400">
-				<AccordionItem>
+			<div class="border rounded-lg">
+				<AccordionItem class="min-h-20 bg-gradient-to-r from-gray-300 to-gray-400 ">
 					<svelte:fragment slot="summary"><h2>{point.id || "new"}</h2></svelte:fragment>
 					<svelte:fragment slot="content">
 						<form on:submit={() => handleForm(point)}>
