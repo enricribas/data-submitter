@@ -1,10 +1,12 @@
 <script lang="ts">
-	import '../app.postcss';
-	import { initializeStores , Toast} from '@skeletonlabs/skeleton';
+	import "../app.postcss";
+	import { initializeStores, Toast } from "@skeletonlabs/skeleton";
 
 	initializeStores();
 </script>
 
 <Toast position="t" />
 
-<slot />
+<div class="container mx-auto">
+	<slot />
+</div>
