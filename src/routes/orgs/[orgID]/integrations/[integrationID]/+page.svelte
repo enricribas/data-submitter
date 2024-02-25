@@ -1,17 +1,27 @@
 <script lang="ts">
+	import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
+	import type { ToastSettings } from "@skeletonlabs/skeleton";
+	import { getToastStore } from "@skeletonlabs/skeleton";
+
 	import { page } from "$app/stores";
 	import { pointsStore, subscribePointsStore } from "$lib/stores/pointsStore";
-	import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
 	import { newEmail, newCRM } from "./newPoints";
+	import { options } from "./pointOptions";
 	import type { Point } from "$lib/types/general";
+	import { updatePoint } from "$lib/commands/updatePoint";
 
-	import CRM from "./crm.svelte";
-	import Email from "./email.svelte";
-
-	const options = {
-		crm: CRM,
-		email: Email,
+	const toastStore = getToastStore();
+	const saved: ToastSettings = {
+		message: "Saved successfully",
 	};
+
+	const handleForm = async (point: Point) => {
+		const { orgID } = $page.params;
+		await updatePoint(orgID, integrationID, point);
+		toastStore.trigger(saved);
+	};
+
+	$: integrationID = $page.params.integrationID;
 
 	const handleNew = (item: Point) => {
 		pointsStore.update((p) => {
@@ -39,7 +49,9 @@
 				<AccordionItem>
 					<svelte:fragment slot="summary"><h2>{point.id || "new"}</h2></svelte:fragment>
 					<svelte:fragment slot="content">
-						<svelte:component this={options[point.type]} {point} />
+						<form on:submit={() => handleForm(point)}>
+							<svelte:component this={options[point.type]} {point} />
+						</form>
 					</svelte:fragment>
 				</AccordionItem>
 			</div>

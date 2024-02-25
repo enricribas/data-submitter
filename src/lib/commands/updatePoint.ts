@@ -4,8 +4,8 @@ import { db, pointURL } from "$lib/firebase";
 import { randomUUID } from "$lib/utils";
 
 export const updatePoint = (orgID: string, integrationID: string, point: Point) => {
-	const { providerID } = point;
-	const docURL = pointURL(orgID, integrationID, providerID || providerNewID(point));
+	const { id } = point;
+	const docURL = pointURL(orgID, integrationID, id || providerNewID(point));
 	const pointDoc = doc(db, docURL);
 
 	return setDoc(pointDoc, point);
