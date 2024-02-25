@@ -34,19 +34,28 @@
 </script>
 
 <div class="m-3">
-	<div class="m-4 flex flex-row gap-4">
-		<button on:click={() => handleNew(newEmail)} type="button" class="btn variant-filled">
+	<div class="float-right m-4 flex flex-row gap-4">
+		<button
+			on:click={() => handleNew(newEmail)}
+			type="button"
+			class="btn variant-filledi bg-blue-400 hover:bg-blue-300 text-white font-bold"
+		>
 			Create Email
 		</button>
-		<button on:click={() => handleNew(newCRM)} type="button" class="btn variant-filled">
+		<button
+			on:click={() => handleNew(newCRM)}
+			type="button"
+			class="btn variant-filledi bg-blue-400 hover:bg-blue-300 text-white font-bold"
+		>
 			Create CRM
 		</button>
 	</div>
+	<h3 class="mb-10 font-bold mr-5 text-2xl text-blue-500">{integrationID}</h3>
 
 	<Accordion spacing="space-y-2">
 		{#each $pointsStore as point}
 			<div class="border rounded-lg">
-				<AccordionItem class="min-h-20 bg-gradient-to-r from-gray-300 to-gray-400 ">
+				<AccordionItem class="min-h-20 bg-gradient-to-r from-gray-200 to-slate-200 ">
 					<svelte:fragment slot="summary"><h2>{point.id || "new"}</h2></svelte:fragment>
 					<svelte:fragment slot="content">
 						<form on:submit={() => handleForm(point)}>
