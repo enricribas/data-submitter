@@ -1,29 +1,20 @@
 <script lang="ts">
-	import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
-	import type { ToastSettings } from "@skeletonlabs/skeleton";
-	import { getToastStore } from "@skeletonlabs/skeleton";
-
+	import type { Point } from "$lib/types/general";
+	import { Accordion, AccordionItem, getToastStore } from "@skeletonlabs/skeleton";
 	import { page } from "$app/stores";
+	import { saved, deleted } from "$lib/toasts";
 	import { pointsStore, subscribePointsStore } from "$lib/stores/pointsStore";
 	import TrashIcon from "$lib/icons/trash.svelte";
 	import { newEmail, newCRM } from "./newPoints";
 	import { options } from "./pointOptions";
-	import type { Point } from "$lib/types/general";
 	import { updatePoint, deletePoint } from "$lib/commands/pointCommands";
+
+	export const toastStore = getToastStore();
 
 	let confirmed = false;
 	$: integrationID = $page.params.integrationID;
 	$: orgID = $page.params.orgID;
 	$: subscribePointsStore({ orgID, integrationID });
-
-	// move Toast stuff to a separate file
-	const toastStore = getToastStore();
-	const saved: ToastSettings = {
-		message: "Saved successfully",
-	};
-	const deleted: ToastSettings = {
-		message: "Deleted successfully",
-	};
 
 	const savePoint = async (point: Point) => {
 		await updatePoint(orgID, integrationID, point);
