@@ -15,7 +15,7 @@
 		message: "Saved successfully",
 	};
 
-	const handleForm = async (point: Point) => {
+	const savePoint = async (point: Point) => {
 		const { orgID } = $page.params;
 		await updatePoint(orgID, integrationID, point);
 		toastStore.trigger(saved);
@@ -23,7 +23,7 @@
 
 	$: integrationID = $page.params.integrationID;
 
-	const handleNew = (item: Point) => {
+	const setupNewPoint = (item: Point) => {
 		pointsStore.update((p) => {
 			p.push(item);
 			return p;
@@ -34,23 +34,25 @@
 </script>
 
 <div class="m-3">
-	<div class="float-right m-4 flex flex-row gap-4">
-		<button
-			on:click={() => handleNew(newEmail)}
-			type="button"
-			class="btn variant-filledi bg-blue-400 hover:bg-blue-300 text-white font-bold"
-		>
-			Create Email
-		</button>
-		<button
-			on:click={() => handleNew(newCRM)}
-			type="button"
-			class="btn variant-filledi bg-blue-400 hover:bg-blue-300 text-white font-bold"
-		>
-			Create CRM
-		</button>
+	<div class="flex justify-between">
+		<div class="m-4 flex flex-row gap-4">
+			<button
+				on:click={() => setupNewPoint(newEmail)}
+				type="button"
+				class="btn variant-filledi bg-blue-400 hover:bg-blue-300 text-white font-bold"
+			>
+				Create Email
+			</button>
+			<button
+				on:click={() => setupNewPoint(newCRM)}
+				type="button"
+				class="btn variant-filledi bg-blue-400 hover:bg-blue-300 text-white font-bold"
+			>
+				Create CRM
+			</button>
+		</div>
+		<h3 class="mb-10 font-bold mr-5 text-2xl text-blue-500">{integrationID}</h3>
 	</div>
-	<h3 class="mb-10 font-bold mr-5 text-2xl text-blue-500">{integrationID}</h3>
 
 	<Accordion spacing="space-y-2">
 		{#each $pointsStore as point}
@@ -58,7 +60,7 @@
 				<AccordionItem class="min-h-20 bg-gradient-to-r from-gray-200 to-slate-200 ">
 					<svelte:fragment slot="summary"><h2>{point.id || "new"}</h2></svelte:fragment>
 					<svelte:fragment slot="content">
-						<form on:submit={() => handleForm(point)}>
+						<form on:submit={() => savePoint(point)}>
 							{#if !point.name}
 								<div class="m-10">
 									<label

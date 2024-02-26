@@ -14,7 +14,13 @@
 	<label for="webhookID" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
 		webhookID
 	</label>
-	<input type="text" bind:value={point.webhookID} id="webhookID" class="input input-form" />
+	<input
+		type="text"
+		required
+		bind:value={point.webhookID}
+		id="webhookID"
+		class="input input-form"
+	/>
 </div>
 
 {#if point.mappings}
