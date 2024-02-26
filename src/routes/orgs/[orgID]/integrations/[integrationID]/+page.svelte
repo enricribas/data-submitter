@@ -5,23 +5,43 @@
 
 	import { page } from "$app/stores";
 	import { pointsStore, subscribePointsStore } from "$lib/stores/pointsStore";
+	import TrashIcon from "$lib/icons/trash.svelte";
 	import { newEmail, newCRM } from "./newPoints";
 	import { options } from "./pointOptions";
 	import type { Point } from "$lib/types/general";
-	import { updatePoint } from "$lib/commands/updatePoint";
+	import { updatePoint, deletePoint } from "$lib/commands/pointCommands";
 
+	let confirmed = false;
+	$: integrationID = $page.params.integrationID;
+	$: orgID = $page.params.orgID;
+	$: subscribePointsStore({ orgID, integrationID });
+
+	// move Toast stuff to a separate file
 	const toastStore = getToastStore();
 	const saved: ToastSettings = {
 		message: "Saved successfully",
 	};
+	const deleted: ToastSettings = {
+		message: "Deleted successfully",
+	};
 
 	const savePoint = async (point: Point) => {
-		const { orgID } = $page.params;
 		await updatePoint(orgID, integrationID, point);
 		toastStore.trigger(saved);
 	};
 
-	$: integrationID = $page.params.integrationID;
+	const deletePointConfirm = async (point: Point) => {
+		if (confirmed) {
+			await deletePoint(orgID, integrationID, point);
+			toastStore.trigger(deleted);
+		} else {
+			setTimeout(() => {
+				confirmed = false;
+			}, 5000);
+		}
+
+		confirmed = !confirmed;
+	};
 
 	const setupNewPoint = (item: Point) => {
 		pointsStore.update((p) => {
@@ -29,8 +49,6 @@
 			return p;
 		});
 	};
-
-	subscribePointsStore($page.params.integrationID);
 </script>
 
 <div class="m-3">
@@ -73,6 +91,23 @@
 								</div>
 							{/if}
 							<svelte:component this={options[point.type]} {point} />
+							<div class="flex justify-between">
+								{#if point.name}
+									<a
+										href=""
+										on:click={() => deletePointConfirm(point)}
+										class="mb-10 ml-10 flex gap-2 text-red-500 font-bold"
+									>
+										<TrashIcon />
+										{confirmed ? "Click again to delete" : "Delete"}
+									</a>
+								{:else}
+									<p class="text-red-400 font-light text-sm">unsaved</p>
+								{/if}
+								<div class="flex justify-end">
+									<button type="submit" class="submit-button"> Save </button>
+								</div>
+							</div>
 						</form>
 					</svelte:fragment>
 				</AccordionItem>

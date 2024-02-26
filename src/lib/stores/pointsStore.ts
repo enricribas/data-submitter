@@ -6,10 +6,8 @@ import type { Point } from "$lib/types/general";
 
 export const pointsStore = writable<Point[]>([]);
 
-export const subscribePointsStore = (integrationID: string) => {
-	// FIXME: This is a hack to get the orgID
-	const orgID = "akua";
-
+type subscribePointsStoreRequest = { integrationID: string; orgID: string };
+export const subscribePointsStore = ({ integrationID, orgID }: subscribePointsStoreRequest) => {
 	const url = pointURL(orgID, integrationID);
 	const col = collection(db, url);
 	const q = query(col);

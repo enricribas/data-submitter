@@ -56,7 +56,3 @@
 		required
 	/>
 </div>
-
-<div class="flex justify-end">
-	<button type="submit" class="submit-button"> Save </button>
-</div>
