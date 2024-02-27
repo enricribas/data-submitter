@@ -34,6 +34,7 @@
 		confirmed = !confirmed;
 	};
 
+	// adds unsaved point, so it will display until refresh unless saved
 	const setupNewPoint = (item: Point) => {
 		pointsStore.update((p) => {
 			p.push(item);
