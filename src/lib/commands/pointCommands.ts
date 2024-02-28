@@ -6,16 +6,14 @@ import { randomUUID } from "$lib/utils";
 export const updatePoint = (orgID: string, integrationID: string, point: Point) => {
 	const { pointDoc, id } = getPoint(orgID, integrationID, point);
 
-	return setDoc(pointDoc, { name: id, deleted: false, ...point }, { merge: true });
+	return setDoc(pointDoc, { name: id, deleted: false, ...point }, merge);
 };
 
 export const deletePoint = (orgID: string, integrationID: string, point: Point) => {
 	const { pointDoc } = getPoint(orgID, integrationID, point);
 
-	return setDoc(pointDoc, { deleted: true }, { merge: true });
+	return setDoc(pointDoc, { deleted: true }, merge);
 };
-
-const providerNewID = (point: Point) => `${point.type}-${randomUUID(5)}`;
 
 const getPoint = (orgID: string, integrationID: string, point: Point) => {
 	const { id } = point;
@@ -23,3 +21,6 @@ const getPoint = (orgID: string, integrationID: string, point: Point) => {
 	const pointDoc = doc(db, docURL);
 	return { pointDoc, id };
 };
+
+const merge = { merge: true };
+const providerNewID = (point: Point) => `${point.type}-${randomUUID(5)}`;
