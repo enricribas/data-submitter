@@ -1,6 +1,7 @@
 {
   "projects": {
-    "prod": "botco-dynamic-data"
+    "prod": "botco-dynamic-data",
+    "default": "botco-dynamic-data"
   },
   "targets": {},
   "etags": {}

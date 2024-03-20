@@ -1,14 +1,16 @@
-import * as firebaseAdmin from 'firebase-admin';
-import type { DocData } from './firebaseTypes';
+import * as firebaseAdmin from "firebase-admin";
+import type { DocData } from "./firebaseTypes";
 
 firebaseAdmin.initializeApp();
 
-export * as functions from 'firebase-functions';
+export * as functions from "firebase-functions";
 export const admin = firebaseAdmin;
 export const store = admin.firestore();
+export const files = admin.storage();
 
 // fails locally otherwise.
-export const updatedAt = () => admin.firestore.FieldValue ? admin.firestore.FieldValue.serverTimestamp() : "local"
+export const updatedAt = () =>
+	admin.firestore.FieldValue ? admin.firestore.FieldValue.serverTimestamp() : "local";
 
 // Takes a collection snap and returns an array with ID
 export const getCol = async (snap: DocData): Promise<any[]> =>

@@ -4,6 +4,9 @@ import { findIntegration } from "./listeners/1-findIntegration";
 import { createContact } from "./listeners/2-createContact";
 import { processJSON } from "./listeners/3-processJSON";
 import { sendOutputs } from "./listeners/4-sendOutputs";
+import { createContactsFromCSV } from "./sms/1-createContactsFromCSV";
+
+/////// Integrations
 
 //// HTTP endpoints
 
@@ -33,3 +36,10 @@ exports.processJSON = functions.firestore.document(baseURL + outputDoc).onCreate
 // When output record updated, send the actual integrations.
 // Note: This looks for state undefined ONLY and sets state before attempting to send.
 exports.sendOutputs = functions.firestore.document(baseURL + outputDoc).onUpdate(sendOutputs);
+
+/////// Broadcast SMS
+
+// when a file is uploaded to storage, convert CSV to contacts table
+// FIXME use the 2nd gen firebase storage
+// FIXME this listens to all buckets
+exports.fileUpload = functions.storage.object().onFinalize(createContactsFromCSV);
