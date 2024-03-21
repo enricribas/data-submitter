@@ -46,6 +46,10 @@ exports.fileUpload = functions.storage.object().onFinalize(createContactsFromCSV
 /////// Dashboard Settings
 
 import { hideMetrics } from "./dashboard/hideMetrics";
+import { getMetrics } from "./dashboard/getMetrics";
 
 // Hide a metric from the dashboard
 exports.hideMetric = functions.https.onRequest(hideMetrics);
+
+// Get metrics from the dashboard
+exports.dashboardSettings = functions.https.onRequest(getMetrics);
