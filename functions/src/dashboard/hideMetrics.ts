@@ -6,7 +6,7 @@ const successResponse = { success: true, message: "Metric hidden." };
 export const hideMetrics = async (req, res) => {
 	if (req.method !== "POST") return errorReturn(res, statuses.notFound, errors.notPost);
 
-	const { orgID, chatbotID, env, metric } = req.query;
+	const { orgID, chatbotID, env, metric } = req.body;
 	if (!orgID || !chatbotID || !env || !metric) {
 		return errorReturn(res, statuses.notFound, errors.missingFields);
 	}
