@@ -3,7 +3,7 @@ import type { Create, EventContext } from "../firebaseTypes";
 import { store } from "../admin";
 import { states } from "../states";
 import { updateState, collectionURLS, processArray, processMap } from "../utils";
-import { processors } from "../processors";
+import { processors } from "./processors";
 
 export const processJSON = async (snap: Create, context: EventContext) => {
 	const request = snap.data();

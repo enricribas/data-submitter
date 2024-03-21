@@ -2,7 +2,7 @@ require("dotenv").config();
 const pbMail = require("paubox-node");
 
 const service = pbMail.emailService();
-import { states } from "../states";
+import { states } from "../../states";
 import type { ProviderData } from "./index";
 
 type PauboxResponse = {

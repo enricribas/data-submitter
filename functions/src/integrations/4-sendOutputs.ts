@@ -3,7 +3,7 @@ import type { Update, EventContext } from "../firebaseTypes";
 import { store, docFor } from "../admin";
 import { states } from "../states";
 import { collectionURLS, updateState } from "../utils";
-import { providers } from "../providers";
+import { providers } from "./providers";
 
 export const sendOutputs = async (snap: Update, context: EventContext) => {
 	const output = snap.after.data();
@@ -13,7 +13,9 @@ export const sendOutputs = async (snap: Update, context: EventContext) => {
 	const { state } = await docFor(outputDoc);
 
 	// Only do this once. Setting a different state at the end if successful
-	if (state !== undefined) { return Promise.resolve(); }
+	if (state !== undefined) {
+		return Promise.resolve();
+	}
 
 	// change state. If something breaks, don't try again automatically
 	await updateState(outputDoc, states.pending);

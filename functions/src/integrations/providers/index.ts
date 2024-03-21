@@ -1,4 +1,4 @@
-import { states } from "../states";
+import { states } from "../../states";
 import paubox from "./paubox";
 import syncari from "./syncari";
 
@@ -9,7 +9,7 @@ export const providers = {
 	sendgrid: noopProvider,
 	salesforce: noopProvider,
 	syncari,
-	paubox
+	paubox,
 };
 
 export type ProviderData = {

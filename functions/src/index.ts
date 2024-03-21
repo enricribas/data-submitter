@@ -1,21 +1,14 @@
 import { functions } from "./admin";
 
-import { postData, test } from "./endpoints/postData";
-import { findIntegration } from "./listeners/1-findIntegration";
-import { createContact } from "./listeners/2-createContact";
-import { processJSON } from "./listeners/3-processJSON";
-import { sendOutputs } from "./listeners/4-sendOutputs";
-
-import { createContactsFromCSV } from "./sms/1-createContactsFromCSV";
-
-import { hideMetrics } from "./dashboard/hideMetrics";
-
 /////// Integrations
 
-//// HTTP endpoints
+import { postData } from "./integrations/postData";
+import { findIntegration } from "./integrations/1-findIntegration";
+import { createContact } from "./integrations/2-createContact";
+import { processJSON } from "./integrations/3-processJSON";
+import { sendOutputs } from "./integrations/4-sendOutputs";
 
-// Test endpoint GET (or POST)
-exports.test = functions.https.onRequest(test);
+//// HTTP endpoints
 
 // Post data to start integration process
 exports.postData = functions.https.onRequest(postData);
@@ -43,6 +36,8 @@ exports.sendOutputs = functions.firestore.document(baseURL + outputDoc).onUpdate
 
 /////// Broadcast SMS
 
+import { createContactsFromCSV } from "./sms/1-createContactsFromCSV";
+
 // when a file is uploaded to storage, convert CSV to contacts table
 // FIXME use the 2nd gen firebase storage
 // FIXME this listens to all buckets
@@ -50,5 +45,7 @@ exports.fileUpload = functions.storage.object().onFinalize(createContactsFromCSV
 
 /////// Dashboard Settings
 
-// Test endpoint GET (or POST)
+import { hideMetrics } from "./dashboard/hideMetrics";
+
+// Hide a metric from the dashboard
 exports.hideMetric = functions.https.onRequest(hideMetrics);
