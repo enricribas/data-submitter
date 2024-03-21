@@ -44,7 +44,7 @@
 </script>
 
 <div class="m-3">
-	<div class="flex justify-between">
+	<div class="flex justify-between mb-6">
 		<div class="m-4 flex flex-row gap-4">
 			<button
 				on:click={() => setupNewPoint(newEmail)}
@@ -67,7 +67,9 @@
 	<Accordion spacing="space-y-2">
 		{#each $pointsStore as point}
 			<div class="border rounded-lg">
-				<AccordionItem class="min-h-20 bg-gradient-to-r from-gray-100 to-slate-100 ">
+				<AccordionItem
+					class="border-2 border-gray-300 rounded-md bg-gradient-to-r from-gray-100 to-slate-100 "
+				>
 					<svelte:fragment slot="summary"><h2>{point.id || "new"}</h2></svelte:fragment>
 					<svelte:fragment slot="content">
 						<form on:submit={() => savePoint(point)}>
