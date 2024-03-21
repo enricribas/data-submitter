@@ -1,3 +1,28 @@
+# Botco MetricHider
+
+Hiding a metric from the dashboard for a particular chatbot
+
+### Requests
+
+## Sending Data
+
+From any HTTP sender POST with 	orgID, chatbotID, env, metric as query parameters;
+
+#### local test
+```bash
+curl http://127.0.0.1:5001/botco-dynamic-data/us-central1/hideMetric?orgID=2&chatbotID=11478&env=dev&metric=DataSubmits \
+-X POST -H "Content-Type: application/json" \
+
+```
+
+#### production
+```bash
+curl https://us-central1-botco-dynamic-data.cloudfunctions.net/hideMetric?orgID=2&chatbotID=11478&env=dev&metric=DataSubmits \
+-X POST -H "Content-Type: application/json" \
+
+```
+
+
 # Botco Data-Submitter
 
 Everything you need to build integrations into your projects
