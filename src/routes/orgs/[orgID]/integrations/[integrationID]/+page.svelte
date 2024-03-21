@@ -49,14 +49,14 @@
 			<button
 				on:click={() => setupNewPoint(newEmail)}
 				type="button"
-				class="btn variant-filledi bg-blue-400 hover:bg-blue-300 text-white font-bold"
+				class="rounded-md btn variant-filledi bg-blue-400 hover:bg-blue-400 text-white font-bold"
 			>
 				Create Email
 			</button>
 			<button
 				on:click={() => setupNewPoint(newCRM)}
 				type="button"
-				class="btn variant-filledi bg-blue-400 hover:bg-blue-300 text-white font-bold"
+				class="rounded-md btn variant-filledi bg-blue-400 hover:bg-blue-400 text-white font-bold"
 			>
 				Create CRM
 			</button>
@@ -67,7 +67,7 @@
 	<Accordion spacing="space-y-2">
 		{#each $pointsStore as point}
 			<div class="border rounded-lg">
-				<AccordionItem class="min-h-20 bg-gradient-to-r from-gray-200 to-slate-200 ">
+				<AccordionItem class="min-h-20 bg-gradient-to-r from-gray-100 to-slate-100 ">
 					<svelte:fragment slot="summary"><h2>{point.id || "new"}</h2></svelte:fragment>
 					<svelte:fragment slot="content">
 						<form on:submit={() => savePoint(point)}>
@@ -79,7 +79,12 @@
 									>
 										name
 									</label>
-									<input type="text" bind:value={point.id} id="id" class="input input-form" />
+									<input
+										type="text"
+										bind:value={point.id}
+										id="id"
+										class="rounded-md bg-white input input-form"
+									/>
 								</div>
 							{/if}
 							<svelte:component this={options[point.type]} {point} />

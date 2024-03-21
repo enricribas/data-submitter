@@ -13,6 +13,6 @@
 		required
 		bind:value={point.webhookID}
 		id="webhookID"
-		class="input input-form"
+		class="rounded-md bg-white input input-form"
 	/>
 </div>

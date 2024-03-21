@@ -24,6 +24,7 @@
 		bind:value={point.addresses}
 		validation={isValidEmail}
 		name="chips"
+		class="bg-white"
 		placeholder="Enter an email address and press Enter."
 		required
 	/>
@@ -36,7 +37,7 @@
 		type="text"
 		bind:value={point.subject}
 		id="subject"
-		class="form-input input w-full"
+		class="rounded-md bg-white form-input input w-full"
 		placeholder="Subject"
 		required
 	/>
@@ -51,7 +52,7 @@
 		id="message"
 		bind:value={point.template}
 		rows="4"
-		class="form-textarea input w-full rounded-lg"
+		class="form-textarea input w-full rounded-md bg-white"
 		placeholder="Write your thoughts here..."
 		required
 	/>
