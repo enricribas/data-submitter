@@ -1,0 +1,19 @@
+{
+  "name": "example.csv",
+  "bucket": "botco-dynamic-data.appspot.com",
+  "metageneration": 1,
+  "generation": 1710966292575,
+  "contentType": "text/csv",
+  "storageClass": "STANDARD",
+  "contentDisposition": "inline",
+  "downloadTokens": [
+    "3837c622-f1aa-4c73-b1cf-f2890b64a280"
+  ],
+  "etag": "AORMzPwEtWZsqa0Zzy3s6uwq7OE",
+  "customMetadata": {},
+  "timeCreated": "2024-03-20T20:24:52.575Z",
+  "updated": "2024-03-20T20:24:52.575Z",
+  "size": 106,
+  "md5Hash": "EO5wA5Wcdke1+yfWioa5sQ==",
+  "crc32c": "2068137922"
+}

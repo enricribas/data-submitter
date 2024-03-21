@@ -1,10 +1,14 @@
 import { functions } from "./admin";
+
 import { postData, test } from "./endpoints/postData";
 import { findIntegration } from "./listeners/1-findIntegration";
 import { createContact } from "./listeners/2-createContact";
 import { processJSON } from "./listeners/3-processJSON";
 import { sendOutputs } from "./listeners/4-sendOutputs";
+
 import { createContactsFromCSV } from "./sms/1-createContactsFromCSV";
+
+import { hideMetrics } from "./dashboard/hideMetrics";
 
 /////// Integrations
 
@@ -43,3 +47,8 @@ exports.sendOutputs = functions.firestore.document(baseURL + outputDoc).onUpdate
 // FIXME use the 2nd gen firebase storage
 // FIXME this listens to all buckets
 exports.fileUpload = functions.storage.object().onFinalize(createContactsFromCSV);
+
+/////// Dashboard Settings
+
+// Test endpoint GET (or POST)
+exports.hideMetric = functions.https.onRequest(hideMetrics);
