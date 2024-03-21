@@ -2,23 +2,41 @@
 
 Hiding a metric from the dashboard for a particular chatbot
 
-### Requests
+## Getting Data
 
-## Sending Data
-
-From any HTTP sender POST with 	orgID, chatbotID, env, metric as query parameters;
+From any HTTP sender GET with	orgID, chatbotID, env, metric as query parameters;
 
 #### local test
 ```bash
-curl http://127.0.0.1:5001/botco-dynamic-data/us-central1/hideMetric?orgID=2&chatbotID=11478&env=dev&metric=DataSubmits \
--X POST -H "Content-Type: application/json" \
+curl http://127.0.0.1:5001/botco-dynamic-data/us-central1/dashboardSettings?orgID=2&chatbotID=11478&env=dev \
+-X GET -H "Content-Type: application/json" \
 
 ```
 
 #### production
 ```bash
-curl https://us-central1-botco-dynamic-data.cloudfunctions.net/hideMetric?orgID=2&chatbotID=11478&env=dev&metric=DataSubmits \
+curl https://us-central1-botco-dynamic-data.cloudfunctions.net/dashboardSettings?orgID=2&chatbotID=11478&env=dev \
+-X GET -H "Content-Type: application/json" \
+
+```
+
+## Sending Data
+
+From any HTTP sender POST with 	orgID, chatbotID, env, metric as BODY;
+
+#### local test
+```bash
+curl http://127.0.0.1:5001/botco-dynamic-data/us-central1/hideMetric \
 -X POST -H "Content-Type: application/json" \
+-d '{"orgID": "dfsdfsd", "chatbotID": "343", "env": "dev", "metric": "LiveChat"'
+
+```
+
+#### production
+```bash
+curl https://us-central1-botco-dynamic-data.cloudfunctions.net/hideMetric \
+-X POST -H "Content-Type: application/json" \
+-d '{"orgID": "dfsdfsd", "chatbotID": "343", "env": "dev", "metric": "LiveChat"'
 
 ```
 
@@ -26,8 +44,6 @@ curl https://us-central1-botco-dynamic-data.cloudfunctions.net/hideMetric?orgID=
 # Botco Data-Submitter
 
 Everything you need to build integrations into your projects
-
-### Requests
 
 ## Sending Data
 
