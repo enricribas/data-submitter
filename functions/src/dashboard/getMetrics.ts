@@ -12,5 +12,9 @@ export const getMetrics = async (req, res) => {
 	const url = `orgs/${orgID}/chatbots/${chatbotID}/env/${env}`;
 	const apiRecord = await docFor(url);
 
+	if (!apiRecord) {
+		return errorReturn(res, statuses.notFound, "not found");
+	}
+
 	return res.status(statuses.success).send(apiRecord);
 };
