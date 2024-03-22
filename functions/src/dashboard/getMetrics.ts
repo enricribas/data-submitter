@@ -2,6 +2,9 @@ import { docFor } from "../admin";
 import { errorReturn, statuses, errors } from "../utils";
 
 export const getMetrics = async (req, res) => {
+	// TODO : Not sure if this does anything
+	res.set("Access-Control-Allow-Origin", "*");
+
 	if (req.method !== "GET") return errorReturn(res, statuses.notFound, errors.notPost);
 
 	const { orgID, chatbotID, env } = req.query;
