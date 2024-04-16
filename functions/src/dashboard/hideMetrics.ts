@@ -17,7 +17,10 @@ export const hideMetrics = async (req, res) => {
 
 		const url = `orgs/${orgID}/chatbots/${chatbotID}/env/${env}`;
 		const apiRecord = await docFor(url);
-		const hiddenMetrics = apiRecord ? [...new Set([...apiRecord.hiddenMetrics, metric])] : [metric];
+
+		const hiddenMetrics = apiRecord?.hiddenMetrics
+			? [...new Set([...apiRecord.hiddenMetrics, metric])]
+			: [metric];
 
 		await store.doc(url).set({ hiddenMetrics }, { merge: true });
 
