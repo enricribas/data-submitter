@@ -1,3 +1,79 @@
+# Botco PromptService
+
+Get a list of "tags" for each chatbot and the prompt needed to process the tag
+
+## Getting Tags and their prompts
+
+From any HTTP sender GET with	orgID and chatbotID as query parameters;
+
+#### local test
+```bash
+curl http://127.0.0.1:5001/botco-dynamic-data/us-central1/getPrompts?orgID=2&chatbotID=11478 \
+-X GET -H "Content-Type: application/json" \
+
+```
+
+#### production
+```bash
+curl https://us-central1-botco-dynamic-data.cloudfunctions.net/getPrompts?orgID=2&chatbotID=11478 \
+-X GET -H "Content-Type: application/json" \
+
+```
+
+##### Response
+```
+[
+	{
+    name: "Topics",
+    prompt: "this is the prompt for LLM for Topics",
+    index: 0, // order on contact list
+    showOnList: true,
+    showOnContact: true,
+  },
+  {
+    name: "Sentiment",
+    prompt: "this is the prompt for LLM for Sentiment",
+    index: 1, // order on contact list
+    showOnList: true,
+    showOnContact: true
+  }
+]
+```
+
+
+## Getting Tag Filters and their possible values
+
+From any HTTP sender GET with	orgID and chatbotID as query parameters;
+
+#### local test
+```bash
+curl http://127.0.0.1:5001/botco-dynamic-data/us-central1/getTagFilters?orgID=2&chatbotID=11478 \
+-X GET -H "Content-Type: application/json" \
+
+```
+
+#### production
+```bash
+curl https://us-central1-botco-dynamic-data.cloudfunctions.net/getTagFilters?orgID=2&chatbotID=11478 \
+-X GET -H "Content-Type: application/json" \
+
+```
+
+##### Response
+```
+[
+  {
+    name: "Topics",
+    values: ["Topic 1", "Topic 2", "Topic 3"],
+  },
+  {
+    name: "Sentiment",
+    values: ["Sentiment 1", "Sentiment 2", "Sentiment 3"],
+  }
+]
+```
+
+
 # Botco MetricHider
 
 Hiding a metric from the dashboard for a particular chatbot

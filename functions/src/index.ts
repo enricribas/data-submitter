@@ -53,3 +53,10 @@ exports.hideMetric = functions.https.onRequest(hideMetrics);
 
 // Get metrics from the dashboard
 exports.dashboardSettings = functions.https.onRequest(getMetrics);
+
+/////// PromptService
+import { getPrompts } from "./prompts/getPrompts";
+import { getTagFilters } from "./prompts/getTagFilters";
+
+exports.getPrompts = functions.https.onRequest(getPrompts);
+exports.getTagFilters = functions.https.onRequest(getTagFilters);
