@@ -79,5 +79,7 @@ exports.getTagFilters = onRequest(getTagFilters);
 /////// Dashboard 2.0
 
 import { getDashboardData } from "./dashboard2/getDashboardData";
+import { updateDashboardData } from "./dashboard2/updateDashboardData";
 
 exports.getDashboardData = onRequest(getDashboardData);
+exports.updateDashboardData = onRequest(updateDashboardData);

@@ -5,10 +5,17 @@ import { addGoalsToBaseJSON } from "./utils/addGoalsToBaseJSON";
 import { mergeRecordWithOverride } from "./utils/mergeRecordWithOverride";
 import { Metric } from './types';
 
+/// Potential issues
+/* 
+	1. Check what happens when there are already settings in place
+	2. You call get with a new goal, but does the existing data override the new goal?
+
+*/
+
 export const getDashboardData = async (req, res) => {
 	// Set CORS headers
 	res.set("Access-Control-Allow-Origin", "*");
-	res.set("Access-Control-Allow-Methods", "GET, OPTIONS");
+	res.set("Access-Control-Allow-Methods", "POST, OPTIONS");
 	res.set("Access-Control-Allow-Headers", "Content-Type");
 
 	// Handle preflight requests
@@ -21,6 +28,7 @@ export const getDashboardData = async (req, res) => {
 		return errorReturn(res, statuses.notFound, errors.notPost);
 	}
 
+	// Get data needed from the request
 	const { orgID, env } = req.query;
 	const { goals, dataSubmits } = req.body;
 
@@ -30,14 +38,14 @@ export const getDashboardData = async (req, res) => {
 	}
 
 	// Create baseJSON with goals and dataSubmits
-	let response: Metric[] = addGoalsToBaseJSON(baseJSON, goals, dataSubmits);
+	const base: Metric[] = addGoalsToBaseJSON(baseJSON, goals, dataSubmits);
 
 	// Fetch this org's dashboard settings
 	const url = `orgs/${orgID}/dashboards/1/env/${env}`;
 	const apiRecord = await docFor(url);
 
 	// Merge the apiRecord with the response, prioritizing apiRecord data
-	response = mergeRecordWithOverride(response, apiRecord);
+	const response = mergeRecordWithOverride(base, apiRecord);
 
 	return res.status(statuses.success).send(response);
 };
