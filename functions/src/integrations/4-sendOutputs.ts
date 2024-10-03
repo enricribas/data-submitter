@@ -1,20 +1,34 @@
-import type { Update, EventContext } from "../firebaseTypes";
+import { Change, DocumentSnapshot } from "firebase-functions/v2/firestore";
 
 import { store, docFor } from "../admin";
 import { states } from "../states";
 import { collectionURLS, updateState } from "../utils";
 import { providers } from "./providers";
 
-export const sendOutputs = async (snap: Update, context: EventContext) => {
-	const output = snap.after.data();
+export const sendOutputs = async (change: Change<DocumentSnapshot>) => {
+	const output = change.after.data();
+	if (!output) {
+		console.error("No data in the snapshot");
+		return null;
+	}
+
 	const { requestID, id } = output;
+	const context = {
+		params: {
+			orgID: change.after.ref.path.split('/')[1],
+			instanceID: change.after.ref.path.split('/')[3],
+			requestID: requestID
+		}
+	};
+
 	const { outputDocFor } = collectionURLS(context, requestID);
 	const outputDoc = outputDocFor(requestID, id);
-	const { state } = await docFor(outputDoc);
+	const stateDoc = await docFor(outputDoc);
+	const state = stateDoc?.state;
 
 	// Only do this once. Setting a different state at the end if successful
 	if (state !== undefined) {
-		return Promise.resolve();
+		return null;
 	}
 
 	// change state. If something breaks, don't try again automatically

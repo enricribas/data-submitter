@@ -1,9 +1,17 @@
-import type { EventContext, Request } from "./firebaseTypes";
-
+import { Request } from "firebase-functions/v2/https";
 import { store } from "./admin";
 
+// Define a custom context type to replace EventContext
+type CustomContext = {
+	params: {
+		orgID: string;
+		instanceID: string;
+		requestID: string;
+	};
+};
+
 // Ensure that all URLs are prefaced with orgID
-const urlFor = (context: EventContext) => {
+const urlFor = (context: CustomContext) => {
 	const { orgID } = context.params;
 	return (url: string) => `/orgs/${orgID}${url}`;
 };
@@ -30,13 +38,13 @@ export const errors = {
 };
 
 // A util that returns common URLs based on context
-export const collectionURLS = (context: EventContext, _requestID?: string) => {
+export const collectionURLS = (context: CustomContext, _requestID?: string) => {
 	const orgify = urlFor(context);
 	const { requestID, orgID, instanceID } = context.params;
 	const outputURL = orgify(`/records/${instanceID}/outputs`);
 
 	return {
-		newTable: (table) => orgify(`/${table}`),
+		newTable: (table: string) => orgify(`/${table}`),
 		outputURL,
 		outputDocFor: (requestID: string, id: string) => `${outputURL}/${requestID}-${id}`,
 		integrationsURL: orgify(`/integrations`),
@@ -51,7 +59,7 @@ export const requestURLFor = (orgID: string, instanceID: string, requestID: stri
 	`/orgs/${orgID}/records/${instanceID}/requests/${requestID}`;
 
 // Iterate over Object and process the value and return processed Object
-export const processMap = (processor) => (mappings, data) => {
+export const processMap = (processor: (value: string, data: any) => any) => (mappings: Record<string, string>, data: any) => {
 	return Object.fromEntries(
 		Object.entries(mappings || {}).map(([field, value]: [string, string]) => {
 			const processed = processor(value, data);
@@ -62,16 +70,16 @@ export const processMap = (processor) => (mappings, data) => {
 };
 
 // Iterate over Array and process the value and return array
-export const processArray = (processor) => (array: string[], data) => {
+export const processArray = (processor: (value: string, data: any) => any) => (array: string[], data: any) => {
 	return (array || []).map((a: string) => processor(a, data));
 };
 
 // standard error return
-export const errorReturn = (res, status, error) => res.status(status).send({ error });
+export const errorReturn = (res: any, status: number, error: string | object) => res.status(status).send({ error });
 
 // Get IP address or default
 export const getIp = (req: Request) =>
-	req.headers["x-forwarded-for"] || req.socket.remoteAddress || req.ip || "no ip";
+	(req.headers["x-forwarded-for"] as string) || req.socket.remoteAddress || "no ip";
 
 // Monthly Fragment for things that reset monthly
 export const yearmon = () => {

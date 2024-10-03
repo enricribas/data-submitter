@@ -1,8 +1,8 @@
-// import { docFor } from "../admin";
 import { errorReturn, statuses, errors } from "../utils";
 
 export const getPrompts = async (req, res) => {
-	if (req.method !== "GET") return errorReturn(res, statuses.notFound, errors.notPost);
+	// FIXME: Remove console.log
+	console.log("req.method\n", "\n", req.method, "\n\n");
 
 	const { orgID, chatbotID } = req.query;
 	if (!orgID || !chatbotID) {
@@ -25,12 +25,6 @@ export const getPrompts = async (req, res) => {
 			showOnContact: true,
 		},
 	];
-	// const url = `orgs/${orgID}/chatbots/${chatbotID}/env/${env}`;
-	// const apiRecord = await docFor(url);
-
-	// if (!apiRecord) {
-	// 	return errorReturn(res, statuses.notFound, "not found");
-	// }
 
 	return res.status(statuses.success).send(mock);
 };

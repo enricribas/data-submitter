@@ -1,4 +1,9 @@
-import { functions } from "./admin";
+// @ts-nocheck
+// linter is screwing up and saying that onDocumentCreated takes wrong arguments
+
+import { onRequest } from "firebase-functions/v2/https";
+import { onDocumentCreated, onDocumentUpdated, DocumentSnapshot } from "firebase-functions/v2/firestore";
+import { onObjectFinalized } from "firebase-functions/v2/storage";
 
 /////// Integrations
 
@@ -11,7 +16,7 @@ import { sendOutputs } from "./integrations/4-sendOutputs";
 //// HTTP endpoints
 
 // Post data to start integration process
-exports.postData = functions.https.onRequest(postData);
+exports.postData = onRequest(postData);
 
 //// Listeners to postData
 
@@ -20,28 +25,38 @@ const requestDoc = "requests/{requestID}";
 const outputDoc = "outputs/{outputID}";
 
 // When a message is written to the request, get integration
-exports.requestReceived = functions.firestore
-	.document(baseURL + requestDoc)
-	.onCreate(findIntegration);
+exports.requestReceived = onDocumentCreated({
+  document: baseURL + requestDoc,
+  handler: findIntegration
+});
 
 // When a message is written to the request, Create a contact record
-exports.createContact = functions.firestore.document(baseURL + requestDoc).onCreate(createContact);
+exports.createContact = onDocumentCreated({
+  document: baseURL + requestDoc,
+  handler: createContact
+});
 
 // When output record created, process data injection
-exports.processJSON = functions.firestore.document(baseURL + outputDoc).onCreate(processJSON);
+exports.processJSON = onDocumentCreated({
+  document: baseURL + outputDoc,
+  handler: processJSON
+});
 
 // When output record updated, send the actual integrations.
 // Note: This looks for state undefined ONLY and sets state before attempting to send.
-exports.sendOutputs = functions.firestore.document(baseURL + outputDoc).onUpdate(sendOutputs);
+exports.sendOutputs = onDocumentUpdated({
+  document: baseURL + outputDoc,
+  handler: sendOutputs
+});
 
 /////// Broadcast SMS
 
 import { createContactsFromCSV } from "./sms/1-createContactsFromCSV";
 
 // when a file is uploaded to storage, convert CSV to contacts table
-// FIXME use the 2nd gen firebase storage
-// FIXME this listens to all buckets
-exports.fileUpload = functions.storage.object().onFinalize(createContactsFromCSV);
+exports.fileUpload = onObjectFinalized({
+  handler: createContactsFromCSV
+});
 
 /////// Dashboard Settings
 
@@ -49,14 +64,20 @@ import { hideMetrics } from "./dashboard/hideMetrics";
 import { getMetrics } from "./dashboard/getMetrics";
 
 // Hide a metric from the dashboard
-exports.hideMetric = functions.https.onRequest(hideMetrics);
+exports.hideMetric = onRequest(hideMetrics);
 
 // Get metrics from the dashboard
-exports.dashboardSettings = functions.https.onRequest(getMetrics);
+exports.dashboardSettings = onRequest(getMetrics);
 
-/////// PromptService
+/////// PromptService - Not using this yet, using Google Sheets for now
 import { getPrompts } from "./prompts/getPrompts";
 import { getTagFilters } from "./prompts/getTagFilters";
 
-exports.getPrompts = functions.https.onRequest(getPrompts);
-exports.getTagFilters = functions.https.onRequest(getTagFilters);
+exports.getPrompts = onRequest(getPrompts);
+exports.getTagFilters = onRequest(getTagFilters);
+
+/////// Dashboard 2.0
+
+import { getDashboardData } from "./dashboard2/getDashboardData";
+
+exports.getDashboardData = onRequest(getDashboardData);

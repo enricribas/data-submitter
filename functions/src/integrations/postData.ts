@@ -1,6 +1,6 @@
+import { Request } from "firebase-functions/v2/https";
 import { store, docFor } from "../admin";
 import { errorReturn, statuses, errors, requestURLFor } from "../utils";
-import { Request } from "../firebaseTypes";
 
 type PostDataRecord = {
 	contactID: string;
@@ -14,11 +14,11 @@ const successResponse = {
 	message: "Request accepted. Check request records for processing status.",
 };
 
-export const test = async (_req: Request, res) => {
+export const test = async (_req: Request, res: any) => {
 	return res.status(statuses.success).send(successResponse);
 };
 
-export const postData = async (req: Request, res) => {
+export const postData = async (req: Request, res: any) => {
 	const { apiKey, body, method, instanceID } = getVars(req);
 
 	if (method !== "POST") return errorReturn(res, statuses.notFound, errors.notPost);
@@ -30,7 +30,7 @@ export const postData = async (req: Request, res) => {
 	const { orgID } = apiRecord;
 
 	try {
-		const success = createRequest(body, orgID, instanceID);
+		const success = await createRequest(body, orgID, instanceID);
 
 		if (!success) return errorReturn(res, statuses.exists, errors.requestIDExists);
 
@@ -41,13 +41,13 @@ export const postData = async (req: Request, res) => {
 };
 
 const getVars = (req: Request) => ({
-	apiKey: req.query.apiKey,
-	instanceID: req.query.instanceID || "default",
+	apiKey: req.query.apiKey as string | undefined,
+	instanceID: (req.query.instanceID as string) || "default",
 	body: req.body as PostDataRecord,
 	method: req.method,
 });
 
-const createRequest = async (body: any, orgID: string, instanceID: any) => {
+const createRequest = async (body: PostDataRecord, orgID: string, instanceID: string) => {
 	const { contactID, requestID, integrationID, data } = body;
 
 	const requestURL = requestURLFor(orgID, instanceID, requestID);

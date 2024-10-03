@@ -2,8 +2,6 @@
 import { errorReturn, statuses, errors } from "../utils";
 
 export const getTagFilters = async (req, res) => {
-	if (req.method !== "GET") return errorReturn(res, statuses.notFound, errors.notPost);
-
 	const { orgID, chatbotID } = req.query;
 	if (!orgID || !chatbotID) {
 		return errorReturn(res, statuses.notFound, errors.missingFields);
