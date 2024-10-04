@@ -3,27 +3,27 @@ export const baseJSON = [
       id: "Views",
       title: "Chatbot Views",
       tooltip: "The number of users that viewed the chatbot.",
-      status: "hidden"
+      status: "show"
     },
     {
       id: "UniqueViews",
       title: "Unique Chatbot Views",
       tooltip: "The number of unique users that viewed the chatbot.",
-      status: "hidden"
+      status: "show"
     },
     {
       id: "EngagedUsers",
       title: "Engaged Users",
       tooltip:
         "The number of unique users that interacted with the chatbot, they opened it and engaged with it through a message or a button click.",
-      status: "hidden"
+      status: "show"
     },
     {
       id: "EngagementRate",
       title: "Engagement rate",
       tooltip:
         "The rate at which unique users engaged in a session (Engaged Sessions / Unique Chatbot Views x 100%).",
-      status: "hidden"
+      status: "show"
     },
     {
       id: "SuccessRate",
@@ -61,3 +61,4 @@ export const baseJSON = [
       status: "hidden"
     },
   ];
+

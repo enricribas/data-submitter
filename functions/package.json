@@ -7,7 +7,7 @@
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "tsc && firebase deploy --only functions",
-    "deploy:dashboard": "tsc && firebase deploy --only functions:getDashboardData,updateDashboardData",
+    "deploy:dashboard": "tsc && firebase deploy --only functions:getDashboardData,functions:updateDashboardData",
     "test": "jest --watch",
     "logs": "firebase functions:log"
   },
